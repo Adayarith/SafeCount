@@ -132,7 +132,6 @@ const ConfigScreen = () => {
         </div>
       </div>
 
-      {/* Navbar fijo al fondo */}
       <Navbar />
     </div>
   );
