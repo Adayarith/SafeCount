@@ -12,7 +12,8 @@ function HistorialPersonas() {
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
-        const respuesta = await fetch('http://localhost:3001/historial');
+        const respuesta = await fetch('http://localhost:5000/api/historial');
+
         const resultado = await respuesta.json();
         setData(resultado);
       } catch (error) {
