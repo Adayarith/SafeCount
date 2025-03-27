@@ -110,7 +110,7 @@ const Registro = () => {
 
         <p className="text-center text-gray-500 mt-4 text-sm">
           ¿Ya estás registrado?{" "}
-          <Link to="/" className="text-blue-500 hover:underline">
+          <Link to="/login" className="text-blue-500 hover:underline">
             Inicia Sesión
           </Link>
         </p>

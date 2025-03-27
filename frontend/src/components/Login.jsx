@@ -1,24 +1,34 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.jpg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState(null);
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      setAlert({ type: "error", message: "Todos los campos son obligatorios." });
+      setAlert({
+        type: "error",
+        message: "Todos los campos son obligatorios.",
+      });
       return;
     }
 
     try {
-      await loginUser(email, password);
+      const response = await loginUser(email, password);
       setAlert({ type: "success", message: "¡Inicio de sesión exitoso!" });
+      localStorage.setItem("username", response.data.nombre);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      login(response.data);
+      navigate("/");
       // Redirección o manejo de sesión aquí
     } catch (err) {
       const msg = err.response?.data?.message || "Error al iniciar sesión.";
@@ -37,7 +47,9 @@ const Login = () => {
 
       {/* Contenido principal */}
       <div className="relative z-10 bg-white shadow-lg rounded-2xl p-6 sm:p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Inicio de Sesión</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Inicio de Sesión
+        </h2>
 
         <div className="absolute top-20 left-1/2 transform -translate-x-1/2 opacity-20 pointer-events-none">
           <img src={logo} alt="Logo" className="w-32 sm:w-40" />
