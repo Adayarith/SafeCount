@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
+        console.log(error)
         logout();
       }
     }
